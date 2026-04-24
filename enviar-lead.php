@@ -26,16 +26,30 @@ $dados = [
     'source' => $source,
 ];
 
-if ($email)    $dados['email']    = $email;
-if ($mensagem) $dados['instagram'] = ''; // placeholder para não enviar campo vazio
+if ($email) $dados['email'] = $email;
 
-// Monta nota com curso e mensagem
-$nota = '';
-if ($curso)    $nota .= "Curso de interesse: $curso\n";
-if ($mensagem) $nota .= "Mensagem: $mensagem";
-// Nota removida por ora — formato da API a confirmar
+$cursoTagMap = [
+    'Informática'      => '160f86f6-cdf8-45c3-8cae-0d5a90476ce4',
+    'Designer Gráfico' => 'c080295c-b28b-4ccd-a720-a36094f55610',
+    'Criação de Jogos' => '6381eb7a-d7fd-48a4-b62b-9a0a1821bfca',
+    'Administração'    => 'e89283ab-653d-4d86-ac8c-b112e2e1a443',
+];
 
-unset($dados['instagram']); // remover placeholder
+$unidadeTagMap = [
+    'Paulista' => 'a7b9c401-575d-4a4a-a9e5-18b32908b36f',
+    'Goiana'   => '7538ae66-cbab-424c-837b-94f49a2783f3',
+];
+
+$tags = [];
+if ($unidade && isset($unidadeTagMap[$unidade])) {
+    $tags[] = ['id' => $unidadeTagMap[$unidade]];
+}
+if ($curso && isset($cursoTagMap[$curso])) {
+    $tags[] = ['id' => $cursoTagMap[$curso]];
+}
+if ($tags) {
+    $dados['tags'] = $tags;
+}
 
 $token = 'dc_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZWEyYmQxZGU0MzM4MzlhZWI0ZDIyMiIsInRlbmFudElkIjoiYmU3ZThhNmEtOGE5ZS00ODhhLTlkMzUtZjRmYThlMjQ2MjE0IiwibmFtZSI6IkludGVncmHDp8OjbyBjb20gbyBTaXRlIiwicm9sZXMiOlsiYWRtaW4iXSwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzc2OTU0MzIyLCJleHAiOjE4OTM0NjY3OTl9.Zrvu8WqS2jiYAjUUG7sTTCGhoJEE9PRvJePpVZNd2Ig';
 

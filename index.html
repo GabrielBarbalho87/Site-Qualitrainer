@@ -681,6 +681,91 @@
     .btn-outline-white { background: transparent; border: 2px solid rgba(255,255,255,.7); color: var(--white); }
 
     /* ───────────────────────────────────────────
+       POPUP DE SAÍDA
+    ─────────────────────────────────────────── */
+    .exit-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.55);
+      z-index: 9999; display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s;
+    }
+    .exit-overlay.active { opacity: 1; visibility: visible; }
+    .exit-popup {
+      background: #fff; border-radius: 20px; padding: 0;
+      max-width: 440px; width: 90%; overflow: hidden;
+      transform: scale(.9); transition: transform .3s;
+      box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    }
+    .exit-overlay.active .exit-popup { transform: scale(1); }
+    .exit-popup-top {
+      background: var(--red); padding: 28px 28px 24px;
+      text-align: center; position: relative;
+    }
+    .exit-popup-top h3 { color: #fff; font-size: 1.35rem; font-weight: 800; margin-bottom: 6px; }
+    .exit-popup-top p { color: rgba(255,255,255,.88); font-size: .9rem; }
+    .exit-popup-close {
+      position: absolute; top: 14px; right: 16px;
+      background: rgba(255,255,255,.2); border: none; color: #fff;
+      width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+      font-size: 1rem; display: flex; align-items: center; justify-content: center;
+    }
+    .exit-popup-close:hover { background: rgba(255,255,255,.35); }
+    .exit-popup-body { padding: 24px 28px 28px; text-align: center; }
+    .exit-popup-body p { font-size: .92rem; color: #555; margin-bottom: 20px; line-height: 1.6; }
+    .exit-popup-btns { display: flex; flex-direction: column; gap: 12px; }
+    .exit-btn-wa {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 13px 20px; border-radius: 10px; font-weight: 700; font-size: .92rem;
+      text-decoration: none; transition: opacity .2s;
+    }
+    .exit-btn-wa:hover { opacity: .85; }
+    .exit-btn-wa.paulista { background: var(--red); color: #fff; }
+    .exit-btn-wa.goiana   { background: var(--blue); color: #fff; }
+    .exit-btn-skip { background: none; border: none; color: #aaa; font-size: .82rem; cursor: pointer; margin-top: 8px; }
+    .exit-btn-skip:hover { color: #777; }
+
+    /* ───────────────────────────────────────────
+       DEPOIMENTOS
+    ─────────────────────────────────────────── */
+    .testimonials-section { padding: 80px 0 60px; background: #fff; overflow: hidden; }
+    .testimonials-section .section-header { margin-bottom: 48px; }
+    .marquee-wrapper {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+      mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    }
+    .marquee-track {
+      display: flex;
+      gap: 20px;
+      width: max-content;
+      animation: marquee 45s linear infinite;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .t-card {
+      background: #fff;
+      border: 2px solid #ebebeb;
+      border-radius: 16px;
+      padding: 24px 22px 20px;
+      width: 265px;
+      flex-shrink: 0;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .t-card:hover { border-color: var(--red); box-shadow: 0 8px 24px rgba(240,26,60,.1); }
+    .t-quote { font-size: 2.8rem; color: #ddd; line-height: 1; margin-bottom: 10px; font-family: Georgia, serif; }
+    .t-text { font-size: .86rem; color: #555; line-height: 1.65; margin-bottom: 20px; min-height: 90px; }
+    .t-footer { display: flex; align-items: center; gap: 12px; }
+    .t-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1.1rem; color: #fff; flex-shrink: 0;
+    }
+    .t-name { font-weight: 700; font-size: .9rem; color: #1a1a1a; }
+    .t-course { font-size: .76rem; color: #999; margin-top: 2px; }
+
+    /* ───────────────────────────────────────────
        CONTATO
     ─────────────────────────────────────────── */
     .contact-section { background: var(--light-gray); }
@@ -881,6 +966,9 @@
       .about-badge { left: 10px; bottom: -14px; }
       .contact-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .courses-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .why-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .why-card:nth-child(n) { grid-column: auto; }
     }
 
     @media (max-width: 720px) {
@@ -896,6 +984,9 @@
       .slide { height: 400px; }
       .form-row { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; }
+      .courses-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .why-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .why-card:nth-child(n) { grid-column: auto; }
     }
 
     @media (max-width: 480px) {
@@ -905,6 +996,9 @@
       .topbar-unit.right .topbar-unit-label { flex-direction: row; }
       .topbar-unit.right .topbar-unit-contacts { justify-content: flex-start; }
       .slide { height: 340px; }
+      .courses-grid { grid-template-columns: 1fr; gap: 14px; }
+      .why-grid { grid-template-columns: 1fr; gap: 14px; }
+      .why-card:nth-child(n) { grid-column: auto; }
     }
 
     /* ───────────────────────────────────────────
@@ -1450,6 +1544,204 @@
 </section>
 
 <!-- ═══════════════════════════════════════════
+     DEPOIMENTOS
+═══════════════════════════════════════════ -->
+<section class="testimonials-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">Histórias de Sucesso</div>
+      <h2>O que dizem nossos <span>Alunos</span></h2>
+    </div>
+  </div>
+  <div class="marquee-wrapper">
+    <div class="marquee-track">
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Aprendi do zero e hoje trabalho com computadores. A Qualitrainer transformou minha vida profissional!"</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:var(--red)">A</div>
+          <div><div class="t-name">Ana Lima</div><div class="t-course">Informática</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"O curso de Programação me abriu portas que eu nem imaginava. Recomendo a Qualitrainer de olhos fechados!"</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:var(--blue)">C</div>
+          <div><div class="t-name">Carlos Souza</div><div class="t-course">Programação</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Professores incríveis e conteúdo atualizado. Me formei em Designer Gráfico e já estou trabalhando na área!"</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:#DB2777">F</div>
+          <div><div class="t-name">Fernanda Costa</div><div class="t-course">Designer Gráfico</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Aprendi na prática como crescer nas redes sociais. Hoje já tenho meus próprios clientes graças à Qualitrainer!"</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:var(--red)">R</div>
+          <div><div class="t-name">Rafael Oliveira</div><div class="t-course">Marketing Digital</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Consegui meu emprego antes mesmo de terminar o curso! A estrutura e os professores fazem toda a diferença."</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:#818CF8">J</div>
+          <div><div class="t-name">Juliana Santos</div><div class="t-course">Atendente de Farmácia</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Conteúdo moderno e muito relevante. A Qualitrainer está na frente quando o assunto é Inteligência Artificial!"</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:#10B981">M</div>
+          <div><div class="t-name">Marcos Alves</div><div class="t-course">Inteligência Artificial</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Melhor investimento que fiz! O certificado foi reconhecido e entrei numa empresa incrível logo após me formar."</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:var(--red)">P</div>
+          <div><div class="t-name">Priscila Ferreira</div><div class="t-course">Auxiliar Administrativo</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Realizar o sonho de trabalhar com jogos foi possível graças à Qualitrainer. Estrutura excelente e professores dedicados!"</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:#22D3EE">D</div>
+          <div><div class="t-name">Diego Mendes</div><div class="t-course">Criação de Jogos</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Curso completo e muito prático. Hoje tenho meu próprio negócio de manutenção de computadores e estou muito feliz!"</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:var(--blue)">A</div>
+          <div><div class="t-name">Aline Rocha</div><div class="t-course">Manutenção de Computadores</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Aprendi a gerir meu próprio negócio com o curso de Administração. A qualidade do ensino da Qualitrainer é incrível!"</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:#F59E0B">B</div>
+          <div><div class="t-name">Bruno Neto</div><div class="t-course">Administração</div></div>
+        </div>
+      </div>
+
+      <!-- Duplicados para loop infinito -->
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Aprendi do zero e hoje trabalho com computadores. A Qualitrainer transformou minha vida profissional!"</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:var(--red)">A</div>
+          <div><div class="t-name">Ana Lima</div><div class="t-course">Informática</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"O curso de Programação me abriu portas que eu nem imaginava. Recomendo a Qualitrainer de olhos fechados!"</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:var(--blue)">C</div>
+          <div><div class="t-name">Carlos Souza</div><div class="t-course">Programação</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Professores incríveis e conteúdo atualizado. Me formei em Designer Gráfico e já estou trabalhando na área!"</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:#DB2777">F</div>
+          <div><div class="t-name">Fernanda Costa</div><div class="t-course">Designer Gráfico</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Aprendi na prática como crescer nas redes sociais. Hoje já tenho meus próprios clientes graças à Qualitrainer!"</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:var(--red)">R</div>
+          <div><div class="t-name">Rafael Oliveira</div><div class="t-course">Marketing Digital</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Consegui meu emprego antes mesmo de terminar o curso! A estrutura e os professores fazem toda a diferença."</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:#818CF8">J</div>
+          <div><div class="t-name">Juliana Santos</div><div class="t-course">Atendente de Farmácia</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Conteúdo moderno e muito relevante. A Qualitrainer está na frente quando o assunto é Inteligência Artificial!"</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:#10B981">M</div>
+          <div><div class="t-name">Marcos Alves</div><div class="t-course">Inteligência Artificial</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Melhor investimento que fiz! O certificado foi reconhecido e entrei numa empresa incrível logo após me formar."</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:var(--red)">P</div>
+          <div><div class="t-name">Priscila Ferreira</div><div class="t-course">Auxiliar Administrativo</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Realizar o sonho de trabalhar com jogos foi possível graças à Qualitrainer. Estrutura excelente e professores dedicados!"</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:#22D3EE">D</div>
+          <div><div class="t-name">Diego Mendes</div><div class="t-course">Criação de Jogos</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Curso completo e muito prático. Hoje tenho meu próprio negócio de manutenção de computadores e estou muito feliz!"</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:var(--blue)">A</div>
+          <div><div class="t-name">Aline Rocha</div><div class="t-course">Manutenção de Computadores</div></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-quote">"</div>
+        <p class="t-text">"Aprendi a gerir meu próprio negócio com o curso de Administração. A qualidade do ensino da Qualitrainer é incrível!"</p>
+        <div class="t-footer">
+          <div class="t-avatar" style="background:#F59E0B">B</div>
+          <div><div class="t-name">Bruno Neto</div><div class="t-course">Administração</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
      CONTATO
 ═══════════════════════════════════════════ -->
 <section class="contact-section" id="contato">
@@ -1758,11 +2050,24 @@
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharWa(); });
 
-  /* ── Hover fachada sobre mapa ── */
+  /* ── Máscara telefone ── */
+  document.getElementById('inputTel').addEventListener('input', function () {
+    var v = this.value.replace(/\D/g, '').slice(0, 11);
+    if (v.length <= 2)       this.value = v.replace(/^(\d{0,2})/, '($1');
+    else if (v.length <= 6)  this.value = v.replace(/^(\d{2})(\d{0,4})/, '($1) $2');
+    else if (v.length <= 10) this.value = v.replace(/^(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    else                     this.value = v.replace(/^(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+  });
+
+  /* ── Hover/toque fachada sobre mapa ── */
   document.querySelectorAll('.map-hover-trap').forEach(trap => {
     const map = trap.closest('.unit-map');
     trap.addEventListener('mouseenter', () => map.classList.add('show-fachada'));
     trap.addEventListener('mouseleave', () => map.classList.remove('show-fachada'));
+    trap.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      map.classList.toggle('show-fachada');
+    }, { passive: false });
   });
 
   /* ── Formulário → Datacrazy CRM ── */
@@ -1778,6 +2083,14 @@
 
     if (!nome || !tel) {
       mostrarFeedback('Por favor, preencha nome e telefone.', false);
+      return;
+    }
+    if (!curso) {
+      mostrarFeedback('Por favor, selecione o curso de interesse.', false);
+      return;
+    }
+    if (!unidade) {
+      mostrarFeedback('Por favor, selecione a unidade de interesse.', false);
       return;
     }
 
@@ -1797,6 +2110,7 @@
       .then(r => r.json())
       .then(data => {
         if (data.sucesso) {
+          sessionStorage.setItem('formEnviado', '1');
           mostrarFeedback('✅ Mensagem enviada! Entraremos em contato em breve.', true);
           document.getElementById('inputNome').value  = '';
           document.getElementById('inputTel').value   = '';
@@ -1824,6 +2138,68 @@
     el.style.border     = sucesso ? '1px solid #a3d9b5' : '1px solid #f0a3a3';
   }
 
+</script>
+
+<!-- POPUP DE SAÍDA -->
+<div class="exit-overlay" id="exitOverlay">
+  <div class="exit-popup">
+    <div class="exit-popup-top">
+      <button class="exit-popup-close" onclick="fecharExitPopup()">✕</button>
+      <h3>Espera, não vá agora!</h3>
+      <p>Entre em contato agora e garanta 50% de desconto</p>
+    </div>
+    <div class="exit-popup-body">
+      <p>Escolha a unidade mais próxima de você e fale diretamente com um de nossos consultores:</p>
+      <div class="exit-popup-btns">
+        <a class="exit-btn-wa paulista" href="https://wa.me/5581989435034" target="_blank">
+          <i class="fa-brands fa-whatsapp"></i> Unidade Paulista-PE
+        </a>
+        <a class="exit-btn-wa goiana" href="https://wa.me/5581986810002" target="_blank">
+          <i class="fa-brands fa-whatsapp"></i> Unidade Goiana-PE
+        </a>
+      </div>
+      <button class="exit-btn-skip" onclick="fecharExitPopup()">Não, obrigado</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    if (sessionStorage.getItem('exitShown') || sessionStorage.getItem('formEnviado')) return;
+
+    function mostrarPopup() {
+      if (sessionStorage.getItem('exitShown') || sessionStorage.getItem('formEnviado')) return;
+      sessionStorage.setItem('exitShown', '1');
+      document.getElementById('exitOverlay').classList.add('active');
+    }
+
+    var isMobile = ('ontouchstart' in window) || (window.innerWidth <= 768);
+
+    if (!isMobile) {
+      // Desktop: mouse saindo pelo topo
+      document.addEventListener('mouseleave', function (e) {
+        if (e.clientY <= 0) mostrarPopup();
+      });
+    } else {
+      // Mobile: scroll rápido para cima após ter descido a página
+      var ultimoScroll = 0;
+      var maxScroll = 0;
+      window.addEventListener('scroll', function () {
+        var atual = window.scrollY;
+        if (atual > maxScroll) maxScroll = atual;
+        if (maxScroll > 800 && ultimoScroll - atual > 80) mostrarPopup();
+        ultimoScroll = atual;
+      }, { passive: true });
+    }
+  })();
+
+  function fecharExitPopup() {
+    document.getElementById('exitOverlay').classList.remove('active');
+  }
+
+  document.getElementById('exitOverlay').addEventListener('click', function (e) {
+    if (e.target === this) fecharExitPopup();
+  });
 </script>
 
 </body>
