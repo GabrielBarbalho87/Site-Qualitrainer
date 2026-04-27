@@ -8,22 +8,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    /* ───────────────────────────────────────────
-       VARIÁVEIS E RESET
-    ─────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════════════
+       ⚠️ VARIÁVEIS GLOBAIS — CORAÇÃO DO SITE
+       Aqui ficam todas as cores, sombras e bordas usadas no site inteiro.
+       Se precisar mudar a cor principal (vermelho ou azul), mude APENAS aqui.
+       NÃO altere cores em outros lugares — tudo referencia estas variáveis.
+       ⚠️ CUIDADO: Mexer aqui afeta TODOS os elementos do site ao mesmo tempo.
+    ═══════════════════════════════════════════════════════════════ */
     :root {
+      /* Vermelho principal — usado em botões, destaques, header do formulário */
       --red:        #F01A3C;
+      /* Vermelho escuro — aparece no hover dos botões vermelhos */
       --red-dark:   #C0102C;
+      /* Vermelho claro — variação mais clara, uso decorativo */
       --red-light:  #FF4466;
+      /* Azul principal — usado na unidade Goiana e elementos secundários */
       --blue:       #0055cc;
+      /* Azul escuro — hover de elementos azuis */
       --blue-dark:  #003d99;
+      /* Azul claro — variação decorativa */
       --blue-light: #2277ff;
+      /* Cores neutras — NÃO alterar sem necessidade */
       --white:      #ffffff;
-      --light-gray: #f5f5f5;
-      --gray:       #666666;
-      --dark:       #1a1a1a;
-      --shadow:     0 4px 20px rgba(0,0,0,.12);
-      --radius:     8px;
+      --light-gray: #f5f5f5; /* fundo de seções alternadas */
+      --gray:       #666666; /* textos secundários */
+      --dark:       #1a1a1a; /* texto principal */
+      --shadow:     0 4px 20px rgba(0,0,0,.12); /* sombra padrão dos cards */
+      --radius:     8px; /* borda arredondada padrão */
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,15 +52,18 @@
     img { max-width: 100%; display: block; }
 
 
-    /* ───────────────────────────────────────────
-       HEADER
-    ─────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════════════
+       HEADER — Barra de navegação fixa no topo
+       ⚠️ position: sticky + z-index: 1000 mantém o menu sempre visível.
+       Se remover o "sticky" o menu some ao rolar a página.
+       Se reduzir o z-index abaixo de 1000 outros elementos podem sobrepor o menu.
+    ═══════════════════════════════════════════════════════════════ */
     header {
       background: var(--white);
       box-shadow: 0 2px 10px rgba(0,0,0,.1);
-      position: sticky;
+      position: sticky; /* ⚠️ NÃO remover — mantém o menu fixo ao rolar */
       top: 0;
-      z-index: 1000;
+      z-index: 1000; /* ⚠️ NÃO reduzir — garante que o menu fique acima de tudo */
     }
     .header-inner {
       display: flex;
@@ -59,11 +73,11 @@
       gap: 16px;
     }
 
-    /* Logo */
+    /* Logo — para alterar o tamanho da logo no desktop, mude o "height" abaixo */
     .logo { display: flex; align-items: center; }
     .logo img { height: 75px; width: auto; display: block; }
 
-    /* Nav */
+    /* Links do menu de navegação desktop */
     nav { display: flex; align-items: center; gap: 4px; }
     nav a {
       padding: 8px 14px;
@@ -75,8 +89,10 @@
       white-space: nowrap;
     }
     nav a:hover { color: var(--blue); background: rgba(0,85,204,.06); }
+    /* Item ativo do menu — atualmente "Início" tem a classe "active" no HTML */
     nav a.active { color: var(--red); background: rgba(204,0,0,.06); }
 
+    /* Botão "Matricule-se" no menu — fundo vermelho arredondado */
     .btn-matricula {
       background: var(--red);
       color: var(--white) !important;
@@ -87,9 +103,10 @@
     }
     .btn-matricula:hover { background: var(--red-dark) !important; transform: translateY(-1px); }
 
-    /* Hamburguer */
+    /* ⚠️ Ícone hamburguer — aparece APENAS no mobile (telas < 720px)
+       É controlado pelo JavaScript: ao clicar, adiciona a classe "open" no nav */
     .hamburger {
-      display: none;
+      display: none; /* escondido no desktop, aparece via media query mobile */
       flex-direction: column;
       gap: 5px;
       cursor: pointer;
@@ -105,14 +122,22 @@
       transition: all .3s;
     }
 
-    /* ───────────────────────────────────────────
-       CONTAINER
-    ─────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════════════
+       CONTAINER — Limita a largura do conteúdo e centraliza na tela
+       Para aumentar a largura máxima do site, mude o "max-width" abaixo.
+       O "padding: 0 20px" garante espaço nas laterais em telas pequenas.
+    ═══════════════════════════════════════════════════════════════ */
     .container { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
 
-    /* ───────────────────────────────────────────
-       BANNER / CAROUSEL
-    ─────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════════════
+       BANNER / CAROUSEL — Slider de 3 banners na parte superior
+       Para alterar a ALTURA dos banners no desktop, mude o "height" em .slide.
+       ⚠️ O carousel é controlado pelo JavaScript no final do arquivo.
+       Se remover o JS do carousel, os banners ficam estáticos e os botões param.
+       As cores de cada slide (slide-1, slide-2, slide-3) estão logo abaixo.
+       Quando as imagens reais chegarem do designer, substitua os backgrounds
+       de cada .slide por: background: url('nome-da-imagem.jpg') center/cover;
+    ═══════════════════════════════════════════════════════════════ */
     .banner-section { width: 100%; overflow: hidden; position: relative; padding: 0; }
 
     .carousel {
@@ -121,11 +146,11 @@
     }
     .carousel-track {
       display: flex;
-      transition: transform .6s cubic-bezier(.77,0,.175,1);
+      transition: transform .6s cubic-bezier(.77,0,.175,1); /* velocidade da animação do slide */
     }
     .slide {
       min-width: 100%;
-      height: 580px;
+      height: 580px; /* ← altere aqui para mudar a altura do banner no desktop */
       position: relative;
       overflow: hidden;
       display: flex;
@@ -318,14 +343,18 @@
       margin: 14px auto 0;
     }
 
-    /* ───────────────────────────────────────────
-       CURSOS
-    ─────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════════════
+       CURSOS — Grid de cards dos cursos
+       Atualmente exibe 4 colunas no desktop (repeat(4, 1fr)).
+       Para adicionar um novo curso: copie um bloco <div class="course-card">
+       no HTML e ajuste o número de colunas se necessário.
+       ⚠️ No mobile vira 1 coluna (ver media queries no final do CSS).
+    ═══════════════════════════════════════════════════════════════ */
     .courses-section { background: var(--light-gray); }
 
     .courses-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, 1fr); /* ← mude para repeat(3, 1fr) se adicionar muitos cursos */
       gap: 28px;
     }
 
@@ -773,7 +802,7 @@
       display: grid;
       grid-template-columns: 1fr 1.4fr;
       gap: 48px;
-      align-items: start;
+      align-items: center;
     }
     .contact-info { }
     .contact-info h3 {
@@ -956,47 +985,57 @@
     }
     .whatsapp-float:hover { transform: scale(1.1); }
 
-    /* ───────────────────────────────────────────
-       RESPONSIVIDADE
-    ─────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════════════
+       ⚠️ RESPONSIVIDADE — SEÇÃO CRÍTICA
+       Estas regras controlam como o site aparece em celulares e tablets.
+       ⚠️ NÃO remova nenhum bloco @media — sem eles o site quebra no mobile.
+       Ordem: 900px (tablet) → 720px (mobile) → 480px (celular pequeno)
+       Cada bloco sobrescreve o anterior para telas menores.
+    ═══════════════════════════════════════════════════════════════ */
+
+    /* TABLET (até 900px) — ajusta grids de 4 colunas para 2 colunas */
     @media (max-width: 900px) {
       .about-grid { grid-template-columns: 1fr; }
-      .about-visual { order: -1; }
+      .about-visual { order: -1; } /* imagem vai para cima do texto no tablet */
       .about-img-box { height: 260px; }
       .about-badge { left: 10px; bottom: -14px; }
-      .contact-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; } /* contato empilha em coluna única */
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
       .courses-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
       .why-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
       .why-card:nth-child(n) { grid-column: auto; }
     }
 
+    /* MOBILE (até 720px) — ativa menu hamburguer, ajusta logo e layouts */
     @media (max-width: 720px) {
-      nav { display: none; flex-direction: column; width: 100%; }
-      nav.open { display: flex; }
+      nav { display: none; flex-direction: column; width: 100%; } /* menu some, aparece ao clicar no hamburguer */
+      nav.open { display: flex; } /* classe adicionada pelo JS ao clicar no hamburguer */
       nav a { width: 100%; padding: 12px 16px; border-radius: 0; border-bottom: 1px solid #eee; }
-      .hamburger { display: flex; }
+      .hamburger { display: flex; } /* ícone hamburguer aparece no mobile */
       .header-inner { flex-wrap: wrap; }
       .nav-wrapper { width: 100%; order: 3; }
+      .logo img { height: 45px; } /* ← logo menor no mobile, era 75px no desktop */
+      .units-grid { grid-template-columns: 1fr; } /* mapas empilhados no mobile */
 
       .counters-grid { grid-template-columns: repeat(2, 1fr); }
       .counter-divider:nth-child(2) { border-right: none; }
-      .slide { height: 400px; }
-      .form-row { grid-template-columns: 1fr; }
+      .slide { height: 400px; } /* banner menor no mobile */
+      .form-row { grid-template-columns: 1fr; } /* campos do formulário em coluna única */
       .footer-grid { grid-template-columns: 1fr; }
       .courses-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
       .why-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
       .why-card:nth-child(n) { grid-column: auto; }
     }
 
+    /* CELULAR PEQUENO (até 480px) — ajustes finais para telas menores */
     @media (max-width: 480px) {
       .topbar .container { grid-template-columns: 1fr; gap: 6px; }
       .topbar-divider { display: none; }
       .topbar-unit.right { align-items: flex-start; text-align: left; }
       .topbar-unit.right .topbar-unit-label { flex-direction: row; }
       .topbar-unit.right .topbar-unit-contacts { justify-content: flex-start; }
-      .slide { height: 340px; }
-      .courses-grid { grid-template-columns: 1fr; gap: 14px; }
+      .slide { height: 340px; } /* banner ainda menor em celulares pequenos */
+      .courses-grid { grid-template-columns: 1fr; gap: 14px; } /* 1 curso por linha */
       .why-grid { grid-template-columns: 1fr; gap: 14px; }
       .why-card:nth-child(n) { grid-column: auto; }
     }
@@ -1123,6 +1162,7 @@
           <a href="#sobre">Sobre</a>
           <a href="#unidades">Unidades</a>
           <a href="#contato">Contato</a>
+          <a href="/blog" target="_blank">Blog</a>
           <a href="#contato" class="btn-matricula">Matricule-se</a>
         </nav>
       </div>
@@ -1137,12 +1177,7 @@
 <section class="banner-section" id="inicio">
   <div class="carousel" id="carousel">
 
-    <!-- Dica para o usuário -->
-    <div class="banner-placeholder-tip">
-      <i class="fa-solid fa-image"></i> Substitua por imagens reais do banner
-    </div>
-
-    <div class="carousel-track" id="carouselTrack">
+<div class="carousel-track" id="carouselTrack">
 
       <!-- Slide 1 -->
       <div class="slide slide-1">
@@ -1366,6 +1401,64 @@
       </div>
 
     </div><!-- /courses-grid -->
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FORMULÁRIO PÓS-CURSOS
+═══════════════════════════════════════════ -->
+<section class="contact-section" style="padding:60px 0;">
+  <div class="container" style="display:flex;justify-content:center;">
+    <div class="contact-form" id="formCursos" style="width:100%;max-width:680px;">
+      <div style="text-align:center;margin-bottom:22px;">
+        <span style="display:inline-block;background:var(--red);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:10px;">🎉 Oferta Especial</span>
+        <h3 style="font-size:1.35rem;font-weight:800;line-height:1.3;color:var(--dark);">Se inscreva e ganhe <span style="color:var(--red);">20% de desconto na sua matrícula!</span></h3>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nome</label>
+          <input id="inputNome2" type="text" placeholder="Seu nome" />
+        </div>
+        <div class="form-group">
+          <label>Sobrenome</label>
+          <input id="inputSobrenome2" type="text" placeholder="Seu sobrenome" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>WhatsApp / Telefone</label>
+          <input id="inputTel2" type="tel" placeholder="(81) 9 9999-9999" />
+        </div>
+        <div class="form-group">
+          <label>E-mail</label>
+          <input id="inputEmail2" type="email" placeholder="seu@email.com" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Curso de interesse</label>
+          <select id="selectCurso2">
+            <option value="">Selecione um curso...</option>
+            <option>Informática</option>
+            <option>Designer Gráfico</option>
+            <option>Criação de Jogos</option>
+            <option>Administração</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Unidade de interesse</label>
+          <select id="selectUnidade2">
+            <option value="">Selecione uma unidade...</option>
+            <option value="Paulista">Paulista-PE – Rua Siqueira Campos, 513</option>
+            <option value="Goiana">Goiana-PE – Rua Santa Tereza</option>
+          </select>
+        </div>
+      </div>
+      <div id="formFeedback2" style="display:none;padding:12px 16px;border-radius:8px;font-size:.92rem;font-weight:600;margin-bottom:14px;text-align:center;"></div>
+      <button id="btnEnviar2" class="btn-submit" type="button" onclick="enviarFormulario2()">
+        <i class="fa-solid fa-paper-plane"></i> Enviar Mensagem
+      </button>
+    </div>
   </div>
 </section>
 
@@ -1758,10 +1851,6 @@
         <div class="unit-contact-box">
           <div class="unit-contact-box-title"><i class="fa-solid fa-location-dot"></i> Unidade Paulista-PE</div>
           <div class="contact-item">
-            <div class="c-icon"><i class="fa-solid fa-map-marker-alt"></i></div>
-            <div><h4>Endereço</h4><p>Rua Siqueira Campos, 513 – Paulista, PE</p></div>
-          </div>
-          <div class="contact-item">
             <div class="c-icon"><i class="fa-brands fa-whatsapp"></i></div>
             <div><h4>WhatsApp</h4><p><a href="https://wa.me/5581989435034" target="_blank" style="color:var(--red)">(81) 9 8943-5034</a></p></div>
           </div>
@@ -1777,10 +1866,6 @@
 
         <div class="unit-contact-box blue">
           <div class="unit-contact-box-title"><i class="fa-solid fa-location-dot"></i> Unidade Goiana-PE</div>
-          <div class="contact-item">
-            <div class="c-icon" style="background:var(--blue)"><i class="fa-solid fa-map-marker-alt"></i></div>
-            <div><h4>Endereço</h4><p>Rua Santa Tereza – Goiana, PE</p></div>
-          </div>
           <div class="contact-item">
             <div class="c-icon" style="background:var(--blue)"><i class="fa-brands fa-whatsapp"></i></div>
             <div><h4>WhatsApp</h4><p><a href="https://wa.me/5581986810002" target="_blank" style="color:var(--blue)">(81) 9 8681-0002</a></p></div>
@@ -1800,43 +1885,47 @@
       <div class="contact-form" id="formContato">
         <div style="text-align:center;margin-bottom:22px;">
           <span style="display:inline-block;background:var(--red);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:10px;">🎉 Oferta Especial</span>
-          <h3 style="font-size:1.35rem;font-weight:800;line-height:1.3;color:var(--dark);">Se inscreva e ganhe <span style="color:var(--red);">50% de desconto!</span></h3>
+          <h3 style="font-size:1.35rem;font-weight:800;line-height:1.3;color:var(--dark);">Se inscreva e ganhe <span style="color:var(--red);">20% de desconto na sua matrícula!</span></h3>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label>Nome completo</label>
+            <label>Nome</label>
             <input id="inputNome" type="text" placeholder="Seu nome" />
           </div>
+          <div class="form-group">
+            <label>Sobrenome</label>
+            <input id="inputSobrenome" type="text" placeholder="Seu sobrenome" />
+          </div>
+        </div>
+        <div class="form-row">
           <div class="form-group">
             <label>WhatsApp / Telefone</label>
             <input id="inputTel" type="tel" placeholder="(81) 9 9999-9999" />
           </div>
+          <div class="form-group">
+            <label>E-mail</label>
+            <input id="inputEmail" type="email" placeholder="seu@email.com" />
+          </div>
         </div>
-        <div class="form-group">
-          <label>E-mail</label>
-          <input id="inputEmail" type="email" placeholder="seu@email.com" />
-        </div>
-        <div class="form-group">
-          <label>Curso de interesse</label>
-          <select id="selectCurso">
-            <option value="">Selecione um curso...</option>
-            <option>Informática</option>
-            <option>Designer Gráfico</option>
-            <option>Criação de Jogos</option>
-            <option>Administração</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Unidade de interesse</label>
-          <select id="selectUnidade">
-            <option value="">Selecione uma unidade...</option>
-            <option value="Paulista">Paulista-PE – Rua Siqueira Campos, 513</option>
-            <option value="Goiana">Goiana-PE – Rua Santa Tereza</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Mensagem (opcional)</label>
-          <textarea id="inputMsg" placeholder="Escreva sua mensagem..."></textarea>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Curso de interesse</label>
+            <select id="selectCurso">
+              <option value="">Selecione um curso...</option>
+              <option>Informática</option>
+              <option>Designer Gráfico</option>
+              <option>Criação de Jogos</option>
+              <option>Administração</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Unidade de interesse</label>
+            <select id="selectUnidade">
+              <option value="">Selecione uma unidade...</option>
+              <option value="Paulista">Paulista-PE – Rua Siqueira Campos, 513</option>
+              <option value="Goiana">Goiana-PE – Rua Santa Tereza</option>
+            </select>
+          </div>
         </div>
         <div id="formFeedback" style="display:none;padding:12px 16px;border-radius:8px;font-size:.92rem;font-weight:600;margin-bottom:14px;text-align:center;"></div>
         <button id="btnEnviar" class="btn-submit" type="button" onclick="enviarFormulario()">
@@ -1969,14 +2058,18 @@
      SCRIPTS
 ═══════════════════════════════════════════ -->
 <script>
-  /* ── Carousel ── */
+  /* ═══════════════════════════════════════════════════════════════
+     ⚠️ CAROUSEL — Controla o slider de banners
+     Troca de slide a cada 5000ms (5 segundos) automaticamente.
+     Para mudar o intervalo, altere o valor 5000 em startAuto().
+     ⚠️ NÃO remova este bloco — sem ele os banners param de funcionar.
+  ═══════════════════════════════════════════════════════════════ */
   const track = document.getElementById('carouselTrack');
   const dotsContainer = document.getElementById('carouselDots');
   const slides = track.querySelectorAll('.slide');
   let current = 0;
   let autoInterval;
 
-  // Build dots
   slides.forEach((_, i) => {
     const dot = document.createElement('button');
     dot.className = 'dot' + (i === 0 ? ' active' : '');
@@ -1994,16 +2087,22 @@
   document.getElementById('prevBtn').addEventListener('click', () => { goTo(current - 1); resetAuto(); });
   document.getElementById('nextBtn').addEventListener('click', () => { goTo(current + 1); resetAuto(); });
 
-  function startAuto() { autoInterval = setInterval(() => goTo(current + 1), 5000); }
+  function startAuto() { autoInterval = setInterval(() => goTo(current + 1), 5000); } /* ← mude 5000 para alterar velocidade */
   function resetAuto() { clearInterval(autoInterval); startAuto(); }
   startAuto();
 
-  /* ── Hamburger ── */
+  /* ═══════════════════════════════════════════════════════════════
+     MENU HAMBURGUER — Abre/fecha o menu no mobile
+     ⚠️ NÃO remova — sem ele o menu some no celular e não volta.
+  ═══════════════════════════════════════════════════════════════ */
   const hamburger = document.getElementById('hamburger');
   const mainNav = document.getElementById('mainNav');
   hamburger.addEventListener('click', () => mainNav.classList.toggle('open'));
 
-  /* ── Smooth active nav on scroll ── */
+  /* ═══════════════════════════════════════════════════════════════
+     MENU ATIVO NO SCROLL — Destaca o item do menu conforme a seção visível
+     Detecta qual seção está na tela e adiciona classe "active" no link.
+  ═══════════════════════════════════════════════════════════════ */
   const sections = document.querySelectorAll('section[id], .banner-section[id]');
   const navLinks = document.querySelectorAll('nav a[href^="#"]');
   window.addEventListener('scroll', () => {
@@ -2017,7 +2116,11 @@
     });
   });
 
-  /* ── Counter animation ── */
+  /* ═══════════════════════════════════════════════════════════════
+     CONTADORES ANIMADOS — Números que contam ao aparecer na tela
+     Os valores vêm do atributo data-target em cada elemento no HTML.
+     Para mudar os números, altere data-target no HTML (não aqui).
+  ═══════════════════════════════════════════════════════════════ */
   function animateCounters() {
     document.querySelectorAll('[data-target]').forEach(el => {
       const target = +el.getAttribute('data-target');
@@ -2039,7 +2142,12 @@
   }, { threshold: .3 });
   counterObs.observe(counterSection);
 
-  /* ── WhatsApp seletor de unidade ── */
+  /* ═══════════════════════════════════════════════════════════════
+     WHATSAPP — Popup seletor de unidade
+     Ao clicar no botão flutuante, abre um popup para escolher a unidade.
+     Os números de WhatsApp estão no HTML do popup (procure por wa.me).
+     Para mudar os números: busque "wa.me/55" no arquivo e altere.
+  ═══════════════════════════════════════════════════════════════ */
   function abrirWa() {
     document.getElementById('waPopup').classList.add('open');
     document.getElementById('waOverlay').classList.add('open');
@@ -2050,16 +2158,29 @@
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharWa(); });
 
-  /* ── Máscara telefone ── */
-  document.getElementById('inputTel').addEventListener('input', function () {
-    var v = this.value.replace(/\D/g, '').slice(0, 11);
-    if (v.length <= 2)       this.value = v.replace(/^(\d{0,2})/, '($1');
-    else if (v.length <= 6)  this.value = v.replace(/^(\d{2})(\d{0,4})/, '($1) $2');
-    else if (v.length <= 10) this.value = v.replace(/^(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
-    else                     this.value = v.replace(/^(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
-  });
+  /* ═══════════════════════════════════════════════════════════════
+     MÁSCARA DE TELEFONE — Formata o campo enquanto o usuário digita
+     Aplicada nos dois formulários (inputTel e inputTel2).
+     ⚠️ NÃO remova — sem ela o campo aceita qualquer texto sem formatação.
+  ═══════════════════════════════════════════════════════════════ */
+  function aplicarMascaraTel(el) {
+    el.addEventListener('input', function () {
+      var v = this.value.replace(/\D/g, '').slice(0, 11);
+      if (v.length <= 2)       this.value = v.replace(/^(\d{0,2})/, '($1');
+      else if (v.length <= 6)  this.value = v.replace(/^(\d{2})(\d{0,4})/, '($1) $2');
+      else if (v.length <= 10) this.value = v.replace(/^(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+      else                     this.value = v.replace(/^(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    });
+  }
+  aplicarMascaraTel(document.getElementById('inputTel'));   /* formulário da seção contato */
+  aplicarMascaraTel(document.getElementById('inputTel2')); /* formulário após seção cursos */
 
-  /* ── Hover/toque fachada sobre mapa ── */
+  /* ═══════════════════════════════════════════════════════════════
+     FACHADAS NOS MAPAS — Ao passar o mouse sobre o mapa, aparece a foto da fachada
+     Funciona via div transparente (.map-hover-trap) sobre o iframe do Google Maps.
+     ⚠️ O iframe do Google Maps bloqueia eventos do mouse, por isso existe essa div.
+     Se remover o .map-hover-trap no HTML, a fachada para de aparecer.
+  ═══════════════════════════════════════════════════════════════ */
   document.querySelectorAll('.map-hover-trap').forEach(trap => {
     const map = trap.closest('.unit-map');
     trap.addEventListener('mouseenter', () => map.classList.add('show-fachada'));
@@ -2070,14 +2191,23 @@
     }, { passive: false });
   });
 
-  /* ── Formulário → Datacrazy CRM ── */
+  /* ═══════════════════════════════════════════════════════════════
+     ⚠️ FORMULÁRIO PRINCIPAL → DATACRAZY CRM — SEÇÃO CRÍTICA
+     Envia os dados do formulário para o CRM via PHP proxy (enviar-lead.php).
+     ⚠️ NÃO altere os IDs dos campos (inputNome, inputTel, etc.) sem atualizar
+     também as referências aqui no JavaScript — senão o formulário quebra.
+     O arquivo enviar-lead.php contém a API Key e as tags do CRM.
+     Se o site sair do ar ou o formulário parar, verifique:
+     1. Se o enviar-lead.php está na Hostinger
+     2. Se a API Key do Datacrazy ainda é válida
+  ═══════════════════════════════════════════════════════════════ */
   function enviarFormulario() {
-    const nome    = document.getElementById('inputNome').value.trim();
+    const nome    = (document.getElementById('inputNome').value.trim() + ' ' + document.getElementById('inputSobrenome').value.trim()).trim();
     const tel     = document.getElementById('inputTel').value.trim();
     const email   = document.getElementById('inputEmail').value.trim();
     const curso   = document.getElementById('selectCurso').value;
     const unidade = document.getElementById('selectUnidade').value;
-    const msg     = document.getElementById('inputMsg').value.trim();
+    const msg     = '';
     const feedback = document.getElementById('formFeedback');
     const btn      = document.getElementById('btnEnviar');
 
@@ -2113,11 +2243,11 @@
           sessionStorage.setItem('formEnviado', '1');
           mostrarFeedback('✅ Mensagem enviada! Entraremos em contato em breve.', true);
           document.getElementById('inputNome').value  = '';
+          document.getElementById('inputSobrenome').value = '';
           document.getElementById('inputTel').value   = '';
           document.getElementById('inputEmail').value = '';
           document.getElementById('selectCurso').value   = '';
           document.getElementById('selectUnidade').value = '';
-          document.getElementById('inputMsg').value   = '';
         } else {
           mostrarFeedback(data.mensagem || 'Erro ao enviar. Tente novamente.', false);
         }
@@ -2127,6 +2257,41 @@
         btn.disabled = false;
         btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Enviar Mensagem';
       });
+  }
+
+  function enviarFormulario2() {
+    const nome    = (document.getElementById('inputNome2').value.trim() + ' ' + document.getElementById('inputSobrenome2').value.trim()).trim();
+    const tel     = document.getElementById('inputTel2').value.trim();
+    const email   = document.getElementById('inputEmail2').value.trim();
+    const curso   = document.getElementById('selectCurso2').value;
+    const unidade = document.getElementById('selectUnidade2').value;
+    const feedback = document.getElementById('formFeedback2');
+    const btn      = document.getElementById('btnEnviar2');
+
+    if (!nome || !tel) { feedback.style.display='block'; feedback.style.background='#ffe0e0'; feedback.style.color='#c00'; feedback.textContent='Por favor, preencha nome e telefone.'; return; }
+    if (!curso) { feedback.style.display='block'; feedback.style.background='#ffe0e0'; feedback.style.color='#c00'; feedback.textContent='Por favor, selecione o curso de interesse.'; return; }
+    if (!unidade) { feedback.style.display='block'; feedback.style.background='#ffe0e0'; feedback.style.color='#c00'; feedback.textContent='Por favor, selecione a unidade de interesse.'; return; }
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
+    feedback.style.display = 'none';
+
+    const body = new FormData();
+    body.append('nome', nome); body.append('telefone', tel); body.append('email', email);
+    body.append('curso', curso); body.append('unidade', unidade); body.append('mensagem', '');
+
+    fetch('enviar-lead.php', { method: 'POST', body })
+      .then(r => r.json())
+      .then(data => {
+        if (data.sucesso) {
+          feedback.style.display='block'; feedback.style.background='#e0ffe0'; feedback.style.color='#080'; feedback.textContent='✅ Mensagem enviada! Entraremos em contato em breve.';
+          document.getElementById('inputNome2').value=''; document.getElementById('inputSobrenome2').value='';
+          document.getElementById('inputTel2').value=''; document.getElementById('inputEmail2').value='';
+          document.getElementById('selectCurso2').value=''; document.getElementById('selectUnidade2').value='';
+        } else { feedback.style.display='block'; feedback.style.background='#ffe0e0'; feedback.style.color='#c00'; feedback.textContent=data.mensagem||'Erro ao enviar. Tente novamente.'; }
+      })
+      .catch(() => { feedback.style.display='block'; feedback.style.background='#ffe0e0'; feedback.style.color='#c00'; feedback.textContent='Erro de conexão. Tente novamente.'; })
+      .finally(() => { btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-paper-plane"></i> Enviar Mensagem'; });
   }
 
   function mostrarFeedback(texto, sucesso) {
@@ -2146,7 +2311,7 @@
     <div class="exit-popup-top">
       <button class="exit-popup-close" onclick="fecharExitPopup()">✕</button>
       <h3>Espera, não vá agora!</h3>
-      <p>Entre em contato agora e garanta 50% de desconto</p>
+      <p>Entre em contato agora e garanta 20% de desconto na sua matrícula</p>
     </div>
     <div class="exit-popup-body">
       <p>Escolha a unidade mais próxima de você e fale diretamente com um de nossos consultores:</p>
@@ -2164,30 +2329,40 @@
 </div>
 
 <script>
+  /* ═══════════════════════════════════════════════════════════════
+     ⚠️ POPUP DE SAÍDA — Aparece quando o usuário tenta sair do site
+     Desktop: detecta o mouse saindo pelo topo da tela (barra do navegador).
+     Mobile: detecta scroll rápido para cima após ter rolado 800px para baixo.
+     ⚠️ O popup NÃO aparece se o usuário já enviou o formulário (formEnviado)
+     ou se já viu o popup nessa sessão (exitShown) — isso evita repetição chata.
+     Para mudar o conteúdo do popup, edite o HTML da div id="exitOverlay".
+     Para desativar o popup completamente: remova este bloco <script> inteiro.
+  ═══════════════════════════════════════════════════════════════ */
   (function () {
+    /* Não mostra se já foi visto ou se o lead já preencheu o formulário */
     if (sessionStorage.getItem('exitShown') || sessionStorage.getItem('formEnviado')) return;
 
     function mostrarPopup() {
       if (sessionStorage.getItem('exitShown') || sessionStorage.getItem('formEnviado')) return;
-      sessionStorage.setItem('exitShown', '1');
+      sessionStorage.setItem('exitShown', '1'); /* marca como visto para não repetir */
       document.getElementById('exitOverlay').classList.add('active');
     }
 
     var isMobile = ('ontouchstart' in window) || (window.innerWidth <= 768);
 
     if (!isMobile) {
-      // Desktop: mouse saindo pelo topo
+      /* Desktop: dispara quando o mouse sai pela parte superior da tela */
       document.addEventListener('mouseleave', function (e) {
         if (e.clientY <= 0) mostrarPopup();
       });
     } else {
-      // Mobile: scroll rápido para cima após ter descido a página
+      /* Mobile: dispara quando usuário rola rápido para cima após ter descido 800px */
       var ultimoScroll = 0;
       var maxScroll = 0;
       window.addEventListener('scroll', function () {
         var atual = window.scrollY;
         if (atual > maxScroll) maxScroll = atual;
-        if (maxScroll > 800 && ultimoScroll - atual > 80) mostrarPopup();
+        if (maxScroll > 800 && ultimoScroll - atual > 80) mostrarPopup(); /* ← 800 = distância mínima de scroll */
         ultimoScroll = atual;
       }, { passive: true });
     }
@@ -2197,6 +2372,7 @@
     document.getElementById('exitOverlay').classList.remove('active');
   }
 
+  /* Fecha o popup ao clicar fora dele (no overlay escuro) */
   document.getElementById('exitOverlay').addEventListener('click', function (e) {
     if (e.target === this) fecharExitPopup();
   });
